@@ -10,10 +10,7 @@ from django.utils.http import urlsafe_base64_encode
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from users.tests.factories import RoleFactory, UserFactory
-from users.models import Role
-from knox.tests.factories import AuthTokenFactory
-from accounts.tests.factories import AccountFactory
+from users.tests.factories import  UserFactory
 
 
 class LoginViewTest(APITestCase):   
@@ -22,7 +19,7 @@ class LoginViewTest(APITestCase):
     def setUpTestData(cls):
         cls.auth_data = { 
             'password': '@thiscool123',
-            'email': 'miracle@mirapayments.com'
+            'email': 'miracle@mysite.com'
         }     
         cls.url = '/users/login/'
 
@@ -41,7 +38,7 @@ class LoginViewTest(APITestCase):
         '''Login with incomplete credentials'''
 
         data = { 
-            'email': 'miracle@mirapayments.com'
+            'email': 'miracle@mysite.com'
         }
         resp = self.client.post(self.url, data=data)
     
@@ -60,8 +57,6 @@ class LoginViewTest(APITestCase):
 
         # set up data
         user = UserFactory(**self.auth_data, email_verified=True)
-        account = AccountFactory()
-        user.accounts.add(account)
        
         login = self.client.post(self.url, data=self.auth_data)
        
@@ -79,7 +74,7 @@ class SignUpViewTest(APITestCase):
         cls.data = {
                     'password':'@thiscool123',
                     'email':'email@example.com',
-                    'account_name': 'Mirapayments',
+                    'account_name': 'mysite',
                     'account_type': 'Individual',
                     'currency': 'NGN'
                     }
@@ -169,7 +164,7 @@ class PasswordResetTest(APITestCase):
         # Assert password is reset
         pwd_reset_confirm_url = '/users/reset-password-confirm/'
         pwd_reset_confirm_data = {
-            'uid': uidb64, 'token': token, 'password': 'mirapayments'
+            'uid': uidb64, 'token': token, 'password': 'mysite'
         }
         resp = self.client.post(pwd_reset_confirm_url, pwd_reset_confirm_data)
         

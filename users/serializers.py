@@ -5,7 +5,7 @@ from django.conf import settings
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from users.models import User, Role
+from users.models import User
 from users.signals import pre_password_reset, post_password_reset
 from helpers.utils import validate_token
 

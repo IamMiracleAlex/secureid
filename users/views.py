@@ -8,7 +8,7 @@ from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 
 
-from helpers.mailers import send_password_reset_mail
+from helpers.utils import send_password_reset_mail
 from helpers.api_response import SuccessResponse, FailureResponse
 from helpers.utils import  jwt_token
 from users import serializers as ser
@@ -146,9 +146,9 @@ class HomeView(APIView):
 
     def get(self, request):
         data = {
-            "service": "Mirapayments API",
+            "service": "Secure ID API",
             "version": "1.0"
         }
-        message = "Are you sure this is where you want to be?"
+        message = "Welcome to secure ID?"
         return SuccessResponse(message=message, data=data)
 
