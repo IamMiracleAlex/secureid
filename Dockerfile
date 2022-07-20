@@ -1,10 +1,8 @@
 FROM python:3.8.8-alpine
 
 
-# RUN apk update \
-#     && apk add gcc python3-dev musl-dev openssl-dev 
-# RUN apk update \
-#     && apk add gcc python3-dev musl-dev libffi-dev openssl-dev cargo
+RUN apk update \
+    && apk add gcc python3-dev musl-dev libffi-dev openssl-dev cargo
 
 RUN pip install --upgrade pip
 
