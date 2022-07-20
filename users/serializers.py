@@ -20,9 +20,9 @@ class UserSerializer(serializers.ModelSerializer):
                 validators=[UniqueValidator(queryset=User.objects.all(),
                 message='User with this email already exists', lookup='iexact')])
     password = serializers.CharField(min_length=8, write_only=True)
-    first_name = serializers.CharField(read_only=True)
-    last_name = serializers.CharField(read_only=True)
-    phone = serializers.CharField(read_only=True)
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    phone = serializers.CharField()
 
 
     def validate_password(self, value):
@@ -37,12 +37,14 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'password', 'first_name', 'last_name','full_name','phone', 'last_login', 'is_active', ]
+        fields = ['id', 'email', 'password', 'first_name', 'last_name','full_name','phone', ]
 
     def create(self, validated_data):
         user = User.objects.create(**validated_data)
         return user
 
+class ResetPasswordRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
 
 
 class TokenValidateMixin:

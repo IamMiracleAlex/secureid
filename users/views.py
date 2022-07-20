@@ -69,25 +69,10 @@ class SignUpView(APIView):
             )
 				
 
-class UserDetail(generics.GenericAPIView):
-    """
-    Retrieve users and update user details
-    GET /users/me/
-    PUT /users/me/
-    """
-    queryset = User.objects.all()
-    permission_classes = [IsAuthenticated]
-    pagination_class = None
-
-    @swagger_auto_schema(responses={200: ser.UserSerializer} )
-    def get(self, request, *args, **kwargs):
-        data = ser.UserSerializer(instance=request.user).data
-        return SuccessResponse(data=data)
-
-
 class ResetPasswordRequest(APIView):
     permission_classes = [AllowAny]
 
+    @swagger_auto_schema(request_body=ser.ResetPasswordRequestSerializer)
     def post(self, request, *args, **kwargs):
         """
         An api view which provides a method to request a password reset token based on an e-mail address
@@ -95,10 +80,11 @@ class ResetPasswordRequest(APIView):
         POST /users/password-reset-request/
         """
 
-        email = request.data.get('email')
-        if not email:
-            return FailureResponse(message='Email is required')
+        serializer = ser.ResetPasswordRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
+        email = serializer.validated_data.get('email')
+     
         # find a user by email address (case insensitive search)
         user = User.objects.filter(email__iexact=email)
 
@@ -149,6 +135,6 @@ class HomeView(APIView):
             "service": "Secure ID API",
             "version": "1.0"
         }
-        message = "Welcome to secure ID?"
+        message = "Welcome to secure ID"
         return SuccessResponse(message=message, data=data)
 

@@ -16,6 +16,8 @@
 The application should now be running on port 8000 (localhost:8000)
 admin site available at localhost:8000
 
+Goto localhost:8000/docs/ for documentation
+
 
 
 

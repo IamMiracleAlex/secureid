@@ -1,17 +1,11 @@
-from django.core import mail
-from django.http.request import HttpRequest
-from django.test.utils import override_settings
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 
 from rest_framework.test import APITestCase
 
-from users.serializers import ( ActivateInvitedUserSerializer, ContactUsSerializer, UserInvitationSerializer, 
-    UserSerializer, UserUpdateSerializer, ResetPasswordConfirmSerializer, ValidateTokenSerializer, 
-    ChangePasswordSerializer )
+from users.serializers import UserSerializer, ResetPasswordConfirmSerializer, ValidateTokenSerializer
 from users.tests.factories import UserFactory
-from accounts.tests.factories import AccountFactory
 
 
 class UserSerializerTest(APITestCase):
@@ -22,14 +16,16 @@ class UserSerializerTest(APITestCase):
         # create incomplete data
         data = {
             'email': 'miracle@example.com',
-            'password': 'example',
+            'password': 'example111',
         }
         invalid_serializer = UserSerializer(data=data)
 
         # assert serilizer data checks validity
         self.assertFalse(invalid_serializer.is_valid())
 
-   
+        data['first_name'] = 'miracle'
+        data['last_name'] = 'alex'
+        data['phone'] = '08122222222'
         valid_serializer = UserSerializer(data=data)
 
         self.assertTrue(valid_serializer.is_valid())

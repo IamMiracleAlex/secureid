@@ -21,13 +21,6 @@ class UserUrlsResolvesToViewTest(SimpleTestCase):
         self.assertEqual(found.func.view_class, views.SignUpView)       
       
     
-    def test_user_detail_update_url_resolves_to_detail_view(self):
-        '''assert that the user me url resolves to the user detail & update view'''
-
-        found = resolve('/users/me/')
-        self.assertEqual(found.func.view_class, views.UserDetailUpdateView)         
-
-    
     def test_password_reset_request_url_resolves_to_view(self):
         '''assert that the password reset request url resolves to the right view'''
 
