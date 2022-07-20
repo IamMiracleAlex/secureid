@@ -1,0 +1,15 @@
+# Created by https://www.gitignore.io/api/django
+
+### Django ###
+*.pyc
+__pycache__/
+media/
+static/
+.vscode
+.env
+env/
+.env.prod
+
+
+.DS_Store
+.vscode/

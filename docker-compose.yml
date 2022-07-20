@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    volumes:
+      - static:/static
+      - media:/media
+    env_file:
+      - .env  
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    command: sh -c "python manage.py migrate &&
+                    python manage.py collectstatic --no-input &&
+                    echo Starting Gunicorn &&
+                    gunicorn mirapayments.wsgi:application --bind 0.0.0.0:8000 --workers 4"
+
+  nginx:
+    build: .
+    pull_policy: always
+    restart: always
+    volumes:
+      - static:/static
+      - media:/media
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    command: [nginx-debug, '-g', 'daemon off;']  
+      
+volumes:
+  static:
+  media:
+
+
+

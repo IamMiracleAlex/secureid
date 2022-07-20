@@ -1,0 +1,11 @@
+asgiref==3.3.4   # django core
+Django==3.2.3   # django core
+pytz==2021.1   # django core
+sqlparse==0.4.1   # django core
+djangorestframework==3.12.4   # rest framework
+python-dotenv==0.18.0    # load env variables
+factory-boy==3.2.0    # for tests
+gunicorn==20.0.4  # for server
+drf-yasg==1.20.0  # swagger documentation
+django-cors-headers==3.10.0   # cors headers
+drf-jwt==1.19.1   #JWT framework
